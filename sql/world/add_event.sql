@@ -1,0 +1,17 @@
+---TODO:
+---Update following tables :
+---game_event
+---game_event_arena_seasons
+---game_event_battleground_holiday
+---game_event_condition
+---game_event_creature
+---game_event_creature_quest
+---game_event_gameobject
+---game_event_gameobject_quest
+---game_event_model_equip
+---game_event_npc_vendor
+---game_event_npcflag
+---game_event_pool
+---game_event_prerequisite
+---game_event_quest_condition
+---game_event_seasonal_questrelation
