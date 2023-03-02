@@ -1,17 +1,5 @@
----TODO:
----Update following tables :
----game_event
----game_event_arena_seasons
----game_event_battleground_holiday
----game_event_condition
----game_event_creature
----game_event_creature_quest
----game_event_gameobject
----game_event_gameobject_quest
----game_event_model_equip
----game_event_npc_vendor
----game_event_npcflag
----game_event_pool
----game_event_prerequisite
----game_event_quest_condition
----game_event_seasonal_questrelation
+INSERT INTO game_event (
+`eventEntry`, `start_time`,        `end_time`,          `occurence`, `length`, `holiday`, `holidayStage`, `description`,   `world_event`, `announce`
+) VALUES (
+46,           2023-03-04 00:00:01, 2030-12-31 12:00:00, 10080,       3060,     0,         0,              "Weekend Bonus", 0,             0
+);
