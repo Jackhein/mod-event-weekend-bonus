@@ -1,0 +1,58 @@
+Subject: [PATCH] Set crafting bonus for weekend event.
+Weekend event ID = 46.
+---
+Index: src/server/game/Entities/Player/PlayerUpdates.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/game/Entities/Player/PlayerUpdates.cpp b/src/server/game/Entities/Player/PlayerUpdates.cpp
+--- a/src/server/game/Entities/Player/PlayerUpdates.cpp	(revision b4a6256dee159635eebca2d241c56f829e303539)
++++ b/src/server/game/Entities/Player/PlayerUpdates.cpp	(date 1677772673570)
+@@ -37,6 +37,7 @@
+ #include "Vehicle.h"
+ #include "WeatherMgr.h"
+ #include "WorldStatePackets.h"
++#include "GameEventMgr.h"
+ 
+ // TODO: this import is not necessary for compilation and marked as unused by the IDE
+ //  however, for some reasons removing it would cause a damn linking issue
+@@ -46,6 +47,7 @@
+ 
+ // Zone Interval should be 1 second
+ constexpr auto ZONE_UPDATE_INTERVAL = 1000;
++constexpr auto WEEKEND_EVENTID = 46;
+ 
+ void Player::Update(uint32 p_time)
+ {
+@@ -711,12 +713,16 @@
+                            uint32 GreenLevel, uint32 YellowLevel)
+ {
+     if (SkillValue >= GrayLevel)
+-        return sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREY) * 10;
++        return  10 * (sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREY) +\
++                (IsEventActive(WEEKEND_EVENTID) ? sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREY_BONUSWE) : 0));
+     if (SkillValue >= GreenLevel)
+-        return sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREEN) * 10;
++        return 10 * (sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREEN) +\
++               (IsEventActive(WEEKEND_EVENTID) ? sWorld->getIntConfig(CONFIG_SKILL_CHANCE_GREEN_BONUSWE) : 0));
+     if (SkillValue >= YellowLevel)
+-        return sWorld->getIntConfig(CONFIG_SKILL_CHANCE_YELLOW) * 10;
+-    return sWorld->getIntConfig(CONFIG_SKILL_CHANCE_ORANGE) * 10;
++        return 10 * (sWorld->getIntConfig(CONFIG_SKILL_CHANCE_YELLOW) +\
++               (IsEventActive(WEEKEND_EVENTID) ? sWorld->getIntConfig(CONFIG_SKILL_CHANCE_YELLOW_BONUSWE) : 0));
++    return 10 * (sWorld->getIntConfig(CONFIG_SKILL_CHANCE_ORANGE) +\
++           (IsEventActive(WEEKEND_EVENTID) ? sWorld->getIntConfig(CONFIG_SKILL_CHANCE_ORANGE_BONUSWE) : 0));
+ }
+ 
+ bool Player::UpdateGatherSkill(uint32 SkillId, uint32 SkillValue,
+@@ -804,7 +810,8 @@
+             }
+ 
+             uint32 craft_skill_gain =
+-                sWorld->getIntConfig(CONFIG_SKILL_GAIN_CRAFTING);
++                sWorld->getIntConfig(CONFIG_SKILL_GAIN_CRAFTING) +\
++                (IsEventActive(WEEKEND_EVENTID) ? sWorld->getIntConfig(CONFIG_SKILL_GAIN_CRAFTING_BONUSWE) : 0);
+ 
+             return UpdateSkillPro(
+                 _spell_idx->second->SkillLine,

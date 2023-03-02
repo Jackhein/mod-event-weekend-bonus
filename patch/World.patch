@@ -1,0 +1,60 @@
+Subject: [PATCH] Set crafting bonus for weekend event.
+Default value:
+Bonus skill: +1
+Bonus percent for Gray: +0%
+Bonus percent for Green: +25%
+Bonus percent for Yellow: +25%
+Bonus percent for Orange: +0%
+---
+Index: src/server/game/World/World.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/game/World/World.cpp b/src/server/game/World/World.cpp
+--- a/src/server/game/World/World.cpp	(revision b4a6256dee159635eebca2d241c56f829e303539)
++++ b/src/server/game/World/World.cpp	(date 1677772167342)
+@@ -988,13 +988,19 @@
+     m_int_configs[CONFIG_SKILL_CHANCE_GREEN]  = sConfigMgr->GetOption<int32>("SkillChance.Green", 25);
+     m_int_configs[CONFIG_SKILL_CHANCE_GREY]   = sConfigMgr->GetOption<int32>("SkillChance.Grey", 0);
+ 
++    m_int_configs[CONFIG_SKILL_CHANCE_ORANGE_BONUSWE] = sConfigMgr->GetOption<int32>("SkillChance.Orange.BonusWE", 0);
++    m_int_configs[CONFIG_SKILL_CHANCE_YELLOW_BONUSWE] = sConfigMgr->GetOption<int32>("SkillChance.Yellow.BonusWE", 25);
++    m_int_configs[CONFIG_SKILL_CHANCE_GREEN_BONUSWE]  = sConfigMgr->GetOption<int32>("SkillChance.Green.BonusWE", 25);
++    m_int_configs[CONFIG_SKILL_CHANCE_GREY_BONUSWE]   = sConfigMgr->GetOption<int32>("SkillChance.Grey.BonusWE", 0);
++
+     m_int_configs[CONFIG_SKILL_CHANCE_MINING_STEPS]     = sConfigMgr->GetOption<int32>("SkillChance.MiningSteps", 75);
+     m_int_configs[CONFIG_SKILL_CHANCE_SKINNING_STEPS]   = sConfigMgr->GetOption<int32>("SkillChance.SkinningSteps", 75);
+ 
+     m_bool_configs[CONFIG_SKILL_PROSPECTING] = sConfigMgr->GetOption<bool>("SkillChance.Prospecting", false);
+     m_bool_configs[CONFIG_SKILL_MILLING]     = sConfigMgr->GetOption<bool>("SkillChance.Milling", false);
+ 
+-    m_int_configs[CONFIG_SKILL_GAIN_CRAFTING] = sConfigMgr->GetOption<int32>("SkillGain.Crafting", 1);
++    m_int_configs[CONFIG_SKILL_GAIN_CRAFTING]         = sConfigMgr->GetOption<int32>("SkillGain.Crafting", 1);
++    m_int_configs[CONFIG_SKILL_GAIN_CRAFTING_BONUSWE] = sConfigMgr->GetOption<int32>("SkillGain.Crafting.BonusWE", 1);
+ 
+     m_int_configs[CONFIG_SKILL_GAIN_DEFENSE] = sConfigMgr->GetOption<int32>("SkillGain.Defense", 1);
+ 
+Index: src/server/game/World/IWorld.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/server/game/World/IWorld.h b/src/server/game/World/IWorld.h
+--- a/src/server/game/World/IWorld.h	(revision b4a6256dee159635eebca2d241c56f829e303539)
++++ b/src/server/game/World/IWorld.h	(date 1677772167270)
+@@ -261,9 +261,14 @@
+     CONFIG_SKILL_CHANCE_YELLOW,
+     CONFIG_SKILL_CHANCE_GREEN,
+     CONFIG_SKILL_CHANCE_GREY,
++    CONFIG_SKILL_CHANCE_ORANGE_BONUSWE,
++    CONFIG_SKILL_CHANCE_YELLOW_BONUSWE,
++    CONFIG_SKILL_CHANCE_GREEN_BONUSWE,
++    CONFIG_SKILL_CHANCE_GREY_BONUSWE,
+     CONFIG_SKILL_CHANCE_MINING_STEPS,
+     CONFIG_SKILL_CHANCE_SKINNING_STEPS,
+     CONFIG_SKILL_GAIN_CRAFTING,
++    CONFIG_SKILL_GAIN_CRAFTING_BONUSWE,
+     CONFIG_SKILL_GAIN_DEFENSE,
+     CONFIG_SKILL_GAIN_GATHERING,
+     CONFIG_SKILL_GAIN_WEAPON,
